@@ -1,0 +1,17 @@
+- [x] Tailwind CSS is installed and configured.
+- [x] `react-router-dom` is installed and routes are defined.
+- [x] Global font is set to "Tajawal" (imported from Google Fonts).
+- [x] HTML `dir` attribute is set to `rtl` and `lang` to `ar`.
+- [x] CSS variables for extracted colors are defined:
+  - [x] `--color-purple` (approx #8B5CF6)
+  - [x] `--color-cyan` (approx #06B6D4)
+  - [x] `--color-orange` (approx #F97316)
+  - [x] `--color-yellow` (approx #EAB308)
+  - [x] `--color-red` (approx #EF4444)
+- [x] Background has a glassy effect with blurred color blobs.
+- [x] 3D Navigation component is implemented and interactive.
+- [x] Clicking navigation items routes to:
+  - [x] `/` (Home)
+  - [x] `/greeting-cards` (بطائق التهنئة)
+  - [x] `/personal-card` (البطاقة الشخصية)
+- [x] Layout supports RTL content flow correctly.
