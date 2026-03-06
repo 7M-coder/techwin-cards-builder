@@ -20,14 +20,14 @@ const Layout = () => {
         {/* <BottomNav /> */}
 
         {/* Main Content */}
-        <main className="flex-grow container mx-auto px-4 py-8 mb-20">
-          <div className="w-full">
+        <main className="flex-grow container mx-auto px-4 py-4 sm:py-8 mb-24 sm:mb-20">
+          <div className="w-full h-full flex items-center justify-center">
             <Outlet />
           </div>
         </main>
 
         {/* Footer */}
-        <footer className="fixed bottom-4 left-0 w-full py-4 text-center text-white/50 text-sm">
+        <footer className="fixed bottom-0 sm:bottom-2 left-0 w-full py-2 sm:py-4 text-center text-white/30 text-[10px] sm:text-xs pointer-events-none">
           <p>@حماد - كنت فاضي الصراحة</p>
         </footer>
       </div>

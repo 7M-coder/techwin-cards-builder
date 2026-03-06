@@ -174,6 +174,13 @@ function PersonalCardGame({ cardScale }) {
   const [downloading, setDl] = useState(false);
   const [svgSrc, setSvgSrc] = useState(SVG_SRC);
   const [shaking, setShaking] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (!activeKey) return;
@@ -262,37 +269,40 @@ function PersonalCardGame({ cardScale }) {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: isMobile ? "column" : "row",
         alignItems: "center",
-        gap: "1rem",
+        gap: "1.5rem",
         width: "100%",
         justifyContent: "center",
         direction: "ltr",
       }}>
       <div
         style={{
-          width: CW * s,
+          width: isMobile ? "100%" : "auto",
           display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-          gap: "0.7rem",
-          minWidth: "9.5rem",
-          order: 2,
+          flexDirection: isMobile ? "row" : "column",
+          flexWrap: "wrap",
+          alignItems: isMobile ? "center" : "flex-end",
+          justifyContent: isMobile ? "center" : "flex-start",
+          gap: "0.6rem",
+          minWidth: isMobile ? "auto" : "9.5rem",
+          order: isMobile ? 2 : 1,
         }}>
         <button
           onClick={handleRecolor}
           style={{
-            padding: "0.45rem 1.1rem",
+            padding: isMobile ? "0.4rem 0.8rem" : "0.5rem 1rem",
             borderRadius: "9999px",
             backdropFilter: "blur(12px)",
             background: "rgba(255,255,255,0.08)",
             border: "1px solid rgba(255,255,255,0.18)",
             color: "rgba(255,255,255,0.8)",
-            fontSize: "0.82rem",
+            fontSize: "clamp(0.7rem, 2vw, 0.82rem)",
             fontWeight: 600,
             fontFamily: "inherit",
             cursor: "pointer",
-            width: "9.5rem",
+            width: isMobile ? "auto" : "9.5rem",
+            flexGrow: isMobile ? 1 : 0,
             boxShadow:
               "-3px -3px 10px 0px #8B5CF622, 3px 3px 10px 0px #06B6D422",
             transition: "all 0.2s ease",
@@ -309,26 +319,29 @@ function PersonalCardGame({ cardScale }) {
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "0.4rem",
+              width: "100%",
             }}>
-            <Shuffle size={15} />
-            {"\u062a\u063a\u064a\u064a\u0631 \u0627\u0644\u0634\u0643\u0644"}
+            <Shuffle size={14} />
+            {"تغيير الشكل"}
           </span>
         </button>
         <button
           onClick={handleReset}
           style={{
-            padding: "0.45rem 1.1rem",
+            padding: isMobile ? "0.4rem 0.8rem" : "0.5rem 1rem",
             borderRadius: "9999px",
             backdropFilter: "blur(12px)",
             background: "rgba(255,255,255,0.08)",
             border: "1px solid rgba(255,255,255,0.18)",
             color: "rgba(255,255,255,0.8)",
-            fontSize: "0.82rem",
+            fontSize: "clamp(0.7rem, 2vw, 0.82rem)",
             fontWeight: 600,
             fontFamily: "inherit",
             cursor: "pointer",
-            width: "9.5rem",
+            width: isMobile ? "auto" : "9.5rem",
+            flexGrow: isMobile ? 1 : 0,
             boxShadow:
               "-3px -3px 10px 0px #EAB30822, 3px 3px 10px 0px #EF444422",
             transition: "all 0.2s ease",
@@ -345,17 +358,19 @@ function PersonalCardGame({ cardScale }) {
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "0.4rem",
+              width: "100%",
             }}>
-            <RotateCcw size={15} />
-            {"\u0625\u0631\u062c\u0627\u0639"}
+            <RotateCcw size={14} />
+            {"إرجاع"}
           </span>
         </button>
         <button
           onClick={downloadJPG}
           disabled={isDownloadDisabled}
           style={{
-            padding: "0.45rem 1.1rem",
+            padding: isMobile ? "0.4rem 0.8rem" : "0.5rem 1rem",
             borderRadius: "9999px",
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
@@ -366,11 +381,11 @@ function PersonalCardGame({ cardScale }) {
             color: isDownloadDisabled
               ? "rgba(255,255,255,0.35)"
               : "rgba(255,255,255,0.85)",
-            fontSize: "0.82rem",
+            fontSize: "clamp(0.7rem, 2vw, 0.82rem)",
             fontWeight: 600,
             fontFamily: "inherit",
             cursor: isDownloadDisabled ? "not-allowed" : "pointer",
-            width: "9.5rem",
+            width: isMobile ? "100%" : "9.5rem",
             boxShadow:
               "0 0 0 1px rgba(255,255,255,0.06), -4px -4px 12px 0px #8B5CF622, 4px 4px 12px 0px #06B6D422, 0 6px 24px rgba(0,0,0,0.25)",
             transition: "all 0.2s ease",
@@ -391,10 +406,12 @@ function PersonalCardGame({ cardScale }) {
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "0.4rem",
+              width: "100%",
             }}>
-            <Download size={15} />
-            {downloading ? "..." : "\u062a\u062d\u0645\u064a\u0644"}
+            <Download size={14} />
+            {downloading ? "..." : "تحميل"}
           </span>
         </button>
       </div>
@@ -409,7 +426,7 @@ function PersonalCardGame({ cardScale }) {
             "0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.07)",
           flexShrink: 0,
           animation: shaking ? "cardShake 0.45s ease" : "none",
-          order: 1,
+          order: isMobile ? 1 : 2,
         }}>
         <img
           src={svgSrc}
@@ -459,7 +476,16 @@ export default function Home() {
   const [step, setStep] = useState("idle");
   const [selected, setSelected] = useState(null);
   const [contentVisible, setContentVisible] = useState(true);
+  const [vw, setVw] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 800,
+  );
   const cardRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => setVw(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const isIdle = step === "idle";
   const isExpanded = step === "expanded";
@@ -499,11 +525,10 @@ export default function Home() {
     return () => document.removeEventListener("mousedown", onOut);
   }, [goTo, isExpanded, isIdle, isSelected]);
 
-  const vw = typeof window !== "undefined" ? window.innerWidth : 800;
   const cardScale = Math.min(1.1, (Math.min(vw * 0.88, 720) - 60) / CW);
 
   return (
-    <div className="flex items-center justify-center min-h-[80vh] py-6">
+    <div className="flex items-center justify-center min-h-[85vh] py-4 sm:py-6 px-4">
       <div
         ref={cardRef}
         onMouseEnter={() => isIdle && setHovered(true)}
@@ -513,17 +538,17 @@ export default function Home() {
           position: "relative",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-end",
-          lineHeight: 1,
+          alignItems: "center",
+          lineHeight: 1.2,
           userSelect: "none",
           gap: "0.5em",
           width: isSelected
-            ? Math.min(vw * 0.92, 720) + "px"
+            ? Math.min(vw * 0.95, 720) + "px"
             : "min(820px, 94vw)",
           minWidth: isExpanded ? "min(620px, 92vw)" : "auto",
-          minHeight: isSelected ? "auto" : "min(420px, 70vh)",
-          padding: "1.6em 2.2em",
-          borderRadius: "2.5rem",
+          minHeight: isSelected ? "auto" : "min(420px, 60vh)",
+          padding: vw < 640 ? "1.2em 1.5em" : "1.6em 2.2em",
+          borderRadius: vw < 640 ? "1.5rem" : "2.5rem",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           background: "rgba(255,255,255,0.06)",
@@ -531,9 +556,9 @@ export default function Home() {
           cursor: isIdle ? `${RED_CURSOR}, pointer` : `${RED_CURSOR}, auto`,
           boxShadow:
             "-6px -6px 20px 0px #F9731633, 6px 6px 20px 0px #EF444433, 0 8px 40px 0px rgba(0,0,0,0.35)",
-          transform: hovered && isIdle ? "scale(1.03)" : "scale(1)",
+          transform: hovered && isIdle ? "scale(1.02)" : "scale(1)",
           transition:
-            "transform 0.3s ease, width 0.6s cubic-bezier(0.4,0,0.2,1), min-width 0.6s cubic-bezier(0.4,0,0.2,1)",
+            "transform 0.3s ease, width 0.6s cubic-bezier(0.4,0,0.2,1), min-width 0.6s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease",
         }}>
         <div
           style={{

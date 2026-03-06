@@ -145,8 +145,8 @@ const PersonalCard = () => {
   // Responsive scale
   useEffect(() => {
     const resize = () => {
-      const maxW = Math.min(window.innerWidth * 0.68, 460);
-      setScale(Math.min(1.8, maxW / CW));
+      const maxW = Math.min(window.innerWidth * 0.9, 480);
+      setScale(Math.min(1.5, maxW / CW));
     };
     resize();
     window.addEventListener("resize", resize);
@@ -234,11 +234,17 @@ const PersonalCard = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "1.8rem",
-        padding: "2rem 1rem 6rem",
-        minHeight: "80vh",
+        gap: "1.5rem",
+        padding: "1rem 1rem 5rem",
+        minHeight: "85vh",
+        justifyContent: "center",
       }}>
-      <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem" }}>
+      <p
+        style={{
+          color: "rgba(255,255,255,0.4)",
+          fontSize: "clamp(0.75rem, 2vw, 0.85rem)",
+          textAlign: "center",
+        }}>
         انقر على حقل في البطاقة واكتب — Tab للانتقال
       </p>
 
@@ -254,6 +260,7 @@ const PersonalCard = () => {
           boxShadow:
             "0 28px 70px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.07)",
           flexShrink: 0,
+          transition: "width 0.3s ease, height 0.3s ease",
         }}>
         <img
           src={SVG_SRC}
@@ -290,7 +297,7 @@ const PersonalCard = () => {
               background: "rgba(139,92,246,0.85)",
               backdropFilter: "blur(8px)",
               color: "white",
-              fontSize: 9 * scale,
+              fontSize: Math.max(8, 9 * scale),
               fontWeight: 700,
               padding: `${2 * scale}px ${7 * scale}px`,
               borderRadius: 6 * scale,
@@ -306,7 +313,7 @@ const PersonalCard = () => {
         onClick={downloadJPG}
         disabled={downloading}
         style={{
-          padding: "0.55rem 2.2rem",
+          padding: "0.6rem 2rem",
           borderRadius: "9999px",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
@@ -315,10 +322,12 @@ const PersonalCard = () => {
           color: downloading
             ? "rgba(255,255,255,0.35)"
             : "rgba(255,255,255,0.85)",
-          fontSize: "0.9rem",
+          fontSize: "clamp(0.8rem, 2.5vw, 0.9rem)",
           fontWeight: 600,
           fontFamily: "'Tajawal', sans-serif",
           cursor: downloading ? "not-allowed" : "pointer",
+          width: window.innerWidth < 640 ? "85%" : "auto",
+          maxWidth: "300px",
           boxShadow: `
             0 0 0 1px rgba(255,255,255,0.06),
             -5px -5px 16px 0px #8B5CF622,

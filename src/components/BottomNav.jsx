@@ -33,10 +33,10 @@ const BottomNav = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+    <div className="fixed bottom-3 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 w-[92%] sm:w-auto max-w-fit">
       <nav
         ref={navRef}
-        className="relative flex items-center gap-2 backdrop-blur-xl bg-white/10 border border-white/20 rounded-full px-4 py-2 shadow-lg shadow-black/20"
+        className="relative flex items-center justify-center gap-0.5 sm:gap-2 backdrop-blur-xl bg-white/10 border border-white/20 rounded-full px-1.5 sm:px-4 py-1.5 sm:py-2 shadow-lg shadow-black/20"
         style={{
           // Corner glow via box-shadow using theme colors
           boxShadow: `
@@ -51,10 +51,10 @@ const BottomNav = () => {
           aria-hidden
           style={{
             position: "absolute",
-            top: "6px",
+            top: "5px",
             left: pill.left,
             width: pill.width,
-            height: "calc(100% - 12px)",
+            height: "calc(100% - 10px)",
             borderRadius: "9999px",
             backgroundColor: pill.color + "33",
             boxShadow: `0 0 14px 3px ${pill.color}55`,
@@ -70,7 +70,7 @@ const BottomNav = () => {
             key={item.path}
             to={item.path}
             ref={(el) => (itemRefs.current[i] = el)}
-            className="relative px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors duration-300"
+            className="relative px-2.5 sm:px-6 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-sm font-medium whitespace-nowrap transition-colors duration-300"
             style={({ isActive }) => ({
               color: isActive ? item.color : "rgba(255,255,255,0.6)",
               textShadow: isActive ? `0 0 12px ${item.color}99` : "none",
