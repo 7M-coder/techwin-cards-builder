@@ -256,11 +256,16 @@ const EidCardGenerator = ({ onBack }) => {
         ref={inputRef}
         type="text"
         style={{
-          position: "absolute",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          width: "1px",
+          height: "1px",
           opacity: 0,
           pointerEvents: "none",
           zIndex: -1,
-          left: "-100vw",
+          transform: "translate(-50%, -50%)",
+          fontSize: "16px",
         }}
         value={activeKey ? values[activeKey] : ""}
         onChange={(e) => {
