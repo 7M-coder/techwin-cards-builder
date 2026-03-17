@@ -28,7 +28,7 @@ const Layout = () => {
 
         {/* Footer */}
         <footer className="fixed bottom-0 sm:bottom-2 left-0 w-full py-2 sm:py-4 text-center text-white/30 text-[10px] sm:text-xs pointer-events-none">
-          <p>@حماد - كنت فاضي الصراحة</p>
+          <p>@حماد & القنيوي</p>
         </footer>
       </div>
     </div>

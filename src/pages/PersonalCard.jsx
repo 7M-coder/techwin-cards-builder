@@ -141,6 +141,7 @@ const PersonalCard = () => {
   const [downloading, setDl] = useState(false);
   const [scale, setScale] = useState(1);
   const cardRef = useRef(null);
+  const inputRef = useRef(null);
 
   // Responsive scale
   useEffect(() => {
@@ -156,6 +157,12 @@ const PersonalCard = () => {
   // Keyboard input
   useEffect(() => {
     if (!activeKey) return;
+    
+    // Focus hidden input for mobile keyboard
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+
     const keys = FIELDS.map((f) => f.key);
     const onKey = (e) => {
       if (e.key === "Escape") {
@@ -167,17 +174,11 @@ const PersonalCard = () => {
         setActive(keys[(keys.indexOf(activeKey) + 1) % keys.length]);
         return;
       }
-      if (e.key === "Backspace") {
-        setValues((v) => ({ ...v, [activeKey]: v[activeKey].slice(0, -1) }));
-        return;
-      }
       if (e.key === "Enter") {
         setActive(null);
         return;
       }
-      if (e.key.length === 1) {
-        setValues((v) => ({ ...v, [activeKey]: v[activeKey] + e.key }));
-      }
+      // Backspace and character input are now handled by the hidden input's onChange
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -239,6 +240,29 @@ const PersonalCard = () => {
         minHeight: "85vh",
         justifyContent: "center",
       }}>
+      {/* Hidden input to trigger mobile keyboard */}
+      <input
+        ref={inputRef}
+        type="text"
+        style={{
+          position: "absolute",
+          opacity: 0,
+          pointerEvents: "none",
+          zIndex: -1,
+          left: "-100vw",
+        }}
+        value={activeKey ? values[activeKey] : ""}
+        onChange={(e) => {
+          if (activeKey) {
+            setValues((v) => ({ ...v, [activeKey]: e.target.value }));
+          }
+        }}
+        onBlur={() => {
+          // Keep active key if user is just switching fields or clicking around
+          // But maybe we want to setActive(null) if they truly blur?
+          // For now, let's keep it simple.
+        }}
+      />
       <p
         style={{
           color: "rgba(255,255,255,0.4)",
