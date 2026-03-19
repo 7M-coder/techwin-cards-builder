@@ -694,41 +694,52 @@ export default function Home() {
                 marginBottom: "0.2em",
               }}
             />
-            {NAV_ITEMS.map((item) => (
-              <button
-                key={item.key}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goTo("selected", item);
-                }}
-                style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid " + item.color + "44",
-                  borderRadius: "1rem",
-                  padding: "0.7em 1.2em",
-                  color: item.color,
-                  fontSize: "clamp(1rem,2.5vw,1.3rem)",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  textAlign: "right",
-                  fontFamily: "inherit",
-                  transition:
-                    "background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = item.color + "22";
-                  e.currentTarget.style.transform = "translateX(-4px)";
-                  e.currentTarget.style.boxShadow =
-                    "0 0 16px 2px " + item.color + "33";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.06)";
-                  e.currentTarget.style.transform = "translateX(0)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}>
-                {item.label}
-              </button>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const isDisabled = item.key === "personal";
+              return (
+                <button
+                  key={item.key}
+                  disabled={isDisabled}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!isDisabled) goTo("selected", item);
+                  }}
+                  style={{
+                    background: isDisabled
+                      ? "rgba(255,255,255,0.03)"
+                      : "rgba(255,255,255,0.06)",
+                    border:
+                      "1px solid " +
+                      (isDisabled ? "rgba(255,255,255,0.1)" : item.color + "44"),
+                    borderRadius: "1rem",
+                    padding: "0.7em 1.2em",
+                    color: isDisabled ? "rgba(255,255,255,0.25)" : item.color,
+                    fontSize: "clamp(1rem,2.5vw,1.3rem)",
+                    fontWeight: 700,
+                    cursor: isDisabled ? "not-allowed" : "pointer",
+                    textAlign: "right",
+                    fontFamily: "inherit",
+                    opacity: isDisabled ? 0.45 : 1,
+                    transition:
+                      "background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (isDisabled) return;
+                    e.currentTarget.style.background = item.color + "22";
+                    e.currentTarget.style.transform = "translateX(-4px)";
+                    e.currentTarget.style.boxShadow =
+                      "0 0 16px 2px " + item.color + "33";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (isDisabled) return;
+                    e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                    e.currentTarget.style.transform = "translateX(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}>
+                  {item.label}
+                </button>
+              );
+            })}
           </div>
         </div>
         <div
